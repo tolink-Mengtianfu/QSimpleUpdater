@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2014-2021 Alex Spataru <https://github.com/alex-spataru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -443,18 +443,17 @@ void Updater::setUpdateAvailable(const bool available)
 
    if (updateAvailable() && (notifyOnUpdate() || notifyOnFinish()))
    {
-      QString text = tr("Would you like to download the update now?");
+      QString text = tr("是否立即开始下载更新?");
       if (m_mandatoryUpdate)
       {
-         text = tr("Would you like to download the update now?<br />This is a mandatory update, exiting now will close "
-                   "the application.");
+         text = tr("是否立即开始下载更新?<br />这是强制性更新，退出后程序将会关闭。 ");
       }
       text += "<br/><br/>";
       if (!m_changelog.isEmpty())
-         text += tr("<strong>Change log:</strong><br/>%1").arg(m_changelog);
+         text += tr("<strong>描述:</strong><br/>%1").arg(m_changelog);
 
       QString title
-          = "<h3>" + tr("Version %1 of %2 has been released!").arg(latestVersion()).arg(moduleName()) + "</h3>";
+          = "<h3>" + tr("新版本 %1  %2").arg(latestVersion()).arg(moduleName()) + "</h3>";
 
       box.setText(title);
       box.setInformativeText(text);

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2014-2021 Alex Spataru <https://github.com/alex-spataru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -194,7 +194,10 @@ void Downloader::finished()
 void Downloader::openDownload()
 {
    if (!m_fileName.isEmpty())
-      QDesktopServices::openUrl(QUrl::fromLocalFile(m_downloadDir.filePath(m_fileName)));
+    {
+        qDebug() << "openDownload:"<< m_downloadDir.filePath(m_fileName);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(m_downloadDir.filePath(m_fileName)));
+    }
 
    else
    {
@@ -264,15 +267,14 @@ void Downloader::cancelDownload()
    if (!m_reply->isFinished())
    {
       QMessageBox box;
-      box.setWindowTitle(tr("Updater"));
+      box.setWindowTitle(tr("升级"));
       box.setIcon(QMessageBox::Question);
       box.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
 
-      QString text = tr("Are you sure you want to cancel the download?");
+      QString text = tr("确定取消下载?");
       if (m_mandatoryUpdate)
       {
-         text = tr("Are you sure you want to cancel the download? This is a mandatory update, exiting now will close "
-                   "the application");
+         text = tr("您确定要取消下载吗？这是一个强制更新，现在取消将关闭应用程序。");
       }
       box.setText(text);
 
@@ -346,7 +348,7 @@ void Downloader::calculateSizes(qint64 received, qint64 total)
    else
       receivedSize = tr("%1 MB").arg(received / 1048576);
 
-   m_ui->downloadLabel->setText(tr("Downloading updates") + " (" + receivedSize + " " + tr("of") + " " + totalSize
+   m_ui->downloadLabel->setText(tr("下载进度") + " (" + receivedSize + " " + tr("of") + " " + totalSize
                                 + ")");
 }
 
@@ -392,7 +394,7 @@ void Downloader::updateProgress(qint64 received, qint64 total)
       m_ui->progressBar->setMinimum(0);
       m_ui->progressBar->setMaximum(0);
       m_ui->progressBar->setValue(-1);
-      m_ui->downloadLabel->setText(tr("Downloading Updates") + "...");
+      m_ui->downloadLabel->setText(tr("下载进度") + "...");
       m_ui->timeLabel->setText(QString("%1: %2").arg(tr("Time Remaining")).arg(tr("Unknown")));
    }
 }
